@@ -71,7 +71,7 @@ class query {
         if (!$result) {
             trigger_error(mysql_error(), E_USER_WARNING);
         } else {
-            
+                    
             $fetchData = $this->fetchdata();
 
             return $fetchData;
@@ -84,7 +84,6 @@ class query {
     }
 
     public function count_result() {
-        $this->num_rows = mysql_num_rows($this->mysql_result);
         return mysql_num_rows($this->mysql_result);
     }
 
@@ -95,6 +94,7 @@ class query {
         }
         $this->result_array = $data;
         $this->row_array = $data['0'];
+        $this->num_rows = mysql_num_rows($this->mysql_result);
  
         return $data;
     }
