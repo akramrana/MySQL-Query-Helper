@@ -78,6 +78,14 @@ class demo {
         }
     }
 
+    public function getProductInfo() {
+        $sql = 'SELECT * FROM ' . configproducts::TABLE_POS_PRODUCT . '
+                WHERE ' . configproducts::TABLE_POS_PRODUCT_ATT_PRODUCT_ID . ' = ' . $_POST['productId'] . '';
+        $query = $this->load->query->runsql($sql);
+        $result = $this->load->query->row_array();
+        return $result;
+    }
+
 }
 
 ?>

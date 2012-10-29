@@ -86,6 +86,12 @@ class query {
     public function count_result() {
         return mysql_num_rows($this->mysql_result);
     }
+    
+    public function runsql($query=''){
+        $this->query = $query;
+        $this->mysql_result = mysql_query($query);
+        return $this->fetchdata();
+    }
 
     public function fetchdata() {
         $data = array();
