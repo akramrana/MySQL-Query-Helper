@@ -78,7 +78,7 @@ class demo {
         }
     }
 
-    public function getProductInfo() {
+    public function testRawSql() {
         $sql = 'SELECT * FROM ' . configproducts::TABLE_POS_PRODUCT . '
                 WHERE ' . configproducts::TABLE_POS_PRODUCT_ATT_PRODUCT_ID . ' = ' . $_POST['productId'] . '';
         $query = $this->load->query->runsql($sql);
