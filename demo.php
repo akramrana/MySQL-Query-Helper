@@ -72,7 +72,7 @@ class demo {
 
     public function testDelete() {
         $this->load->query->where("id", "1");
-        $delete = $this->load->query->delete("tbl_user_info");
+        $delete = $this->query->delete("tbl_user_info");
         if ($delete) {
             return '1';
         }
@@ -81,8 +81,8 @@ class demo {
     public function testRawSql() {
         $sql = 'SELECT * FROM ' . configproducts::TABLE_POS_PRODUCT . '
                 WHERE ' . configproducts::TABLE_POS_PRODUCT_ATT_PRODUCT_ID . ' = ' . $_POST['productId'] . '';
-        $query = $this->load->query->runsql($sql);
-        $result = $this->load->query->row_array();
+        $query = $this->query->runsql($sql);
+        $result = $this->query->row_array();
         return $result;
     }
 
