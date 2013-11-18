@@ -7,7 +7,7 @@
  * Date :: 10-25-2012
  * End :: To Be Continue
  */
-class query {
+class Query {
 
     public $select = array();
     public $where = array();
@@ -68,10 +68,13 @@ class query {
 
         $result = $this->mysql_result;
         
+        $this->where = "";
+        $this->select = "";
+
         if (!$result) {
             trigger_error(mysql_error(), E_USER_WARNING);
         } else {
-                    
+
             $fetchData = $this->fetchdata();
 
             return $fetchData;
@@ -83,14 +86,14 @@ class query {
         return mysql_query($query);
     }
 
-    public function count_result() {
-        return mysql_num_rows($this->mysql_result);
-    }
-    
-    public function runsql($query=''){
+    public function runsql($query='') {
         $this->query = $query;
         $this->mysql_result = mysql_query($query);
         return $this->fetchdata();
+    }
+
+    public function count_result() {
+        return mysql_num_rows($this->mysql_result);
     }
 
     public function fetchdata() {
@@ -101,10 +104,10 @@ class query {
         $this->result_array = $data;
         $this->row_array = $data['0'];
         $this->num_rows = mysql_num_rows($this->mysql_result);
- 
+
         return $data;
     }
-    
+
     public function select($param=array()) {
         return array_push($this->select, $param);
     }
@@ -131,6 +134,7 @@ class query {
         $sql.= 'WHERE ' . $costr;
         $update = $this->query_execute($sql);
         if ($update == '1') {
+            $this->where = "";
             return true;
         } else {
             trigger_error(mysql_error(), E_USER_WARNING);
@@ -156,6 +160,7 @@ class query {
         $sql.= 'WHERE ' . $costr;
         $delete = $this->query_execute($sql);
         if ($delete == '1') {
+            $this->where = null;
             return true;
         } else {
             trigger_error(mysql_error(), E_USER_WARNING);
@@ -168,6 +173,35 @@ class query {
 
     public function result_array() {
         return $this->result_array;
+    }
+
+    public function createdb($dbname="") {
+        $sql = 'CREATE DATABASE ' . $dbname . '';
+        return $this->query_execute($sql);
+    }
+
+    public function create_table($tablename="",$datatype=array()) {
+        $data = '';
+        if ($datatype == true) {
+            foreach ($datatype as $key => $value) {
+                $data .= $key.' '.$value.",";
+            }
+            $finalData = substr($data, 0, strlen($data) - 1);
+            
+            $sql = 'CREATE TABLE ' . $tablename . '('.$finalData.')';
+            //echo $sql;
+            $create = $this->query_execute($sql);
+            if ($create == '1') {
+                return true;
+            } else {
+                trigger_error(mysql_error(), E_USER_WARNING);
+            }
+        }
+    }
+    
+    public function drop_table($tablename="") {
+        $sql = 'DROP TABLE ' . $tablename . '';
+        return $this->query_execute($sql);
     }
 
 }
